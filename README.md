@@ -15,21 +15,20 @@ https://www.youtube.com/watch?v=Jn9lGxTmRb8
 
 ## 📸 Screenshots
 
-### 📄 Document Upload & Processing
-![Upload](<img width="1470" height="956" alt="Documents" src="https://github.com/user-attachments/assets/a0d1deb6-1aae-461e-84c5-ce74aee16006" />
-)
+### 📄 Document
+![Document](./screenshots/Document.png)
 
-### 🧠 AI Quiz Generation
-![Quiz](./screenshots/quiz.png)
+### 🧠 AI Summary
+![Flashcards](./screenshots/Summary.png)
 
 ### 🃏 Flashcards
-![Flashcards](./screenshots/flashcards.png)
+![Flashcards](./screenshots/Flashcards.png)
 
 ### 💬 AI Chat Assistant
-![Chat](./screenshots/chat.png)
+![Chat](./screenshots/Chat.png)
 
-### 📊 Quiz Results
-![Results](./screenshots/results.png)
+### 📊 Quiz 
+![Results](./screenshots/Quiz.png)
 
 ---
 
