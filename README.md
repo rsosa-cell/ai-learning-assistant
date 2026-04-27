@@ -15,8 +15,9 @@ https://www.youtube.com/watch?v=Jn9lGxTmRb8
 
 ## 📸 Screenshots
 
- Document 
-| ![](./screenshots/Documents.png) |
+| Document | Upload |
+|----------|--------|
+| ![](./screenshots/Documents.png) | ![](./screenshots/Uploading.png) |
 
 | Summary | Quiz |
 |--------|------|
