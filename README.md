@@ -97,11 +97,6 @@ https://www.youtube.com/watch?v=Jn9lGxTmRb8
 
 ---
 
-## 📁 Project Structure
-backend
-frontend
----
-
 ## ⚙️ Environment Variables
 
 ### Backend `.env`
