@@ -16,7 +16,7 @@ https://www.youtube.com/watch?v=Jn9lGxTmRb8
 ## 📸 Screenshots
 
 ### 📄 Document
-![Document](./screenshots/Document.png)
+![](./screenshots/Document.png)
 
 ### 🧠 AI Summary
 ![Flashcards](./screenshots/Summary.png)
