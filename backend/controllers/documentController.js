@@ -1,0 +1,158 @@
+import Document from '../models/Document.js';
+import { extractTextFromPDF } from '../utils/pdfParser.js';
+import { chunkText } from '../utils/textChunker.js';
+import fs from 'fs/promises';
+import mongoose from 'mongoose';
+
+/* ---------------- UPLOAD DOCUMENT ---------------- */
+export const uploadDocument = async (req, res, next) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ success: false, error: 'No file uploaded' });
+    }
+
+    const { title } = req.body;
+    if (!title) {
+      await fs.unlink(req.file.path).catch(() => {});
+      return res.status(400).json({ success: false, error: 'Title is required' });
+    }
+
+    // This URL matches the app.use('/uploads', ...) in server.js
+    const fileUrl = `/uploads/documents/${req.file.filename}`;
+
+    const document = await Document.create({
+      userId: req.user._id,
+      title,
+      fileName: req.file.originalname,
+      filePath: req.file.path, // Full path for backend FS operations
+      fileUrl,                 // Relative URL for frontend display
+      fileSize: req.file.size,
+      status: 'processing'
+    });
+
+    // Start background processing
+    processPDF(document._id, req.file.path).catch((err) => {
+      console.error('Error processing PDF:', err);
+    });
+
+    return res.status(201).json({
+      success: true,
+      data: document,
+      message: 'Document uploaded successfully'
+    });
+
+  } catch (error) {
+    if (req.file) await fs.unlink(req.file.path).catch(() => {});
+    next(error);
+  }
+};
+
+/* ---------------- GET SINGLE DOCUMENT ---------------- */
+export const getDocument = async (req, res, next) => {
+  try {
+    const documentResults = await Document.aggregate([
+      {
+        $match: {
+          _id: new mongoose.Types.ObjectId(req.params.id),
+          userId: new mongoose.Types.ObjectId(req.user._id)
+        }
+      },
+      {
+        $lookup: {
+          from: 'flashcards',
+          localField: '_id',
+          foreignField: 'documentId',
+          as: 'flashcards'
+        }
+      },
+      {
+        $lookup: {
+          from: 'quizzes',
+          localField: '_id',
+          foreignField: 'documentId',
+          as: 'quizzes'
+        }
+      },
+      {
+        $addFields: {
+          flashcardCount: { $size: '$flashcards' },
+          quizCount: { $size: '$quizzes' }
+        }
+      },
+      {
+        $project: {
+          // chunks and extractedText are removed to keep the payload light
+          chunks: 0,
+          flashcards: 0,
+          quizzes: 0
+        }
+      }
+    ]);
+
+    if (!documentResults || documentResults.length === 0) {
+      return res.status(404).json({ success: false, error: 'Document not found' });
+    }
+
+    // ✅ FIX: Return the object directly, not the array
+    res.status(200).json({
+      success: true,
+      data: documentResults[0]
+    });
+
+  } catch (error) {
+    next(error);
+  }
+};
+
+/* ---------------- PROCESS PDF ---------------- */
+const processPDF = async (documentId, filePath) => {
+  try {
+    const text = await extractTextFromPDF(filePath);
+    const chunks = chunkText(text, 500, 50);
+
+    await Document.findByIdAndUpdate(documentId, {
+      extractedText: text,
+      chunks,
+      status: 'ready' // Changed from 'processed' to match your Schema enum
+    });
+
+    console.log(`Document ${documentId} processed successfully`);
+  } catch (error) {
+    console.error(`Error processing document ${documentId}:`, error);
+    await Document.findByIdAndUpdate(documentId, { status: 'error' });
+  }
+};
+
+/* ---------------- GET ALL DOCUMENTS ---------------- */
+export const getDocuments = async (req, res, next) => {
+  try {
+    const documents = await Document.find({
+      userId: req.user._id
+    }).sort({ createdAt: -1 });
+
+    res.status(200).json({ success: true, data: documents });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/* ---------------- DELETE DOCUMENT ---------------- */
+export const deleteDocument = async (req, res, next) => {
+  try {
+    const document = await Document.findOne({
+      _id: req.params.id,
+      userId: req.user._id
+    });
+
+    if (!document) {
+      return res.status(404).json({ success: false, error: 'Document not found' });
+    }
+
+    await Document.deleteOne({ _id: document._id });
+    await fs.unlink(document.filePath).catch(() => {});
+
+    res.status(200).json({ success: true, message: 'Document deleted successfully' });
+  } catch (error) {
+    next(error);
+  }
+};
