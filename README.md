@@ -15,21 +15,19 @@ https://www.youtube.com/watch?v=Jn9lGxTmRb8
 
 ## 📸 Screenshots
 
-### 📄 Document
-![](./screenshots/Document.png)
+## 📸 Screenshots
 
-### 🧠 AI Summary
-![Flashcards](./screenshots/Summary.png)
+| Document | Upload |
+|----------|--------|
+| ![](./screenshots/Document.png) |
 
-### 🃏 Flashcards
-![Flashcards](./screenshots/Flashcards.png)
+| Summary | Quiz |
+|--------|------|
+| ![](./screenshots/Summary.png) | ![](./screenshots/Quiz.png) |
 
-### 💬 AI Chat Assistant
-![Chat](./screenshots/Chat.png)
-
-### 📊 Quiz 
-![Results](./screenshots/Quiz.png)
-
+| Flashcards | Chat |
+|------------|------|
+| ![](./screenshots/Flashcards.png) | ![](./screenshots/Chat.png) |
 ---
 
 ## 🚀 Features
