@@ -1,6 +1,6 @@
 # 🧠 AI Learning Assistant
 
-An AI-powered study platform that transforms documents into interactive learning experiences using **quizzes, flashcards, summaries, and AI chat assistance**.
+An AI-powered study platform that transforms documents into interactive learning experiences using quizzes, flashcards, summaries, and an AI chat assistant.
 
 Built as a full-stack application with **React, Node.js, Express, MongoDB, and Google Gemini AI**, focusing on intelligent content processing and personalized learning.
 
@@ -8,18 +8,16 @@ Built as a full-stack application with **React, Node.js, Express, MongoDB, and G
 
 ## 🎥 Demo
 
-👉 **Video Demo:**  
-[https://www.youtube.com/watch?v=Jn9lGxTmRb8)
+👉 Video Demo:  
+https://www.youtube.com/watch?v=Jn9lGxTmRb8
 
 ---
 
 ## 📸 Screenshots
 
-### 🏠 Dashboard
-![Dashboard](./screenshots/dashboard.png)
-
 ### 📄 Document Upload & Processing
-![Upload](./screenshots/upload.png)
+![Upload](<img width="1470" height="956" alt="Documents" src="https://github.com/user-attachments/assets/a0d1deb6-1aae-461e-84c5-ce74aee16006" />
+)
 
 ### 🧠 AI Quiz Generation
 ![Quiz](./screenshots/quiz.png)
@@ -91,17 +89,29 @@ Built as a full-stack application with **React, Node.js, Express, MongoDB, and G
 
 ## 🧠 System Architecture
 
-1. User uploads document
-2. Backend extracts text content
-3. Text is split into semantic chunks
-4. AI processes chunks using Gemini API
+1. User uploads document  
+2. Backend extracts text content  
+3. Text is split into semantic chunks  
+4. AI processes chunks using Gemini API  
 5. Features generated:
    - Quizzes
    - Flashcards
    - Summaries
-   - Chat responses
+   - Chat responses  
 6. Data stored per user in MongoDB
 
 ---
 
 ## 📁 Project Structure
+backend
+frontend
+---
+
+## ⚙️ Environment Variables
+
+### Backend `.env`
+MONGO_URI=your_mongodb_connection
+JWT_SECRET=your_secret_key
+GEMINI_API_KEY=your_api_key
+
+---
