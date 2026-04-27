@@ -15,8 +15,7 @@ https://www.youtube.com/watch?v=Jn9lGxTmRb8
 
 ## 📸 Screenshots
 
-
-|----------|--------|
+| Document |
 | ![](./screenshots/Document.png) |
 
 | Summary | Quiz |
